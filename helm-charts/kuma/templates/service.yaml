@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuma-control-plane
+  labels:
+    app: kuma
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5681
+      targetPort: 5681
+      protocol: TCP
+      name: admin
+    - port: 5682
+      targetPort: 5682
+      protocol: TCP
+      name: grpc
+  selector:
+    app: kuma
+    component: control-plane

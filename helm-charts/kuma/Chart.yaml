@@ -1,0 +1,9 @@
+name: kuma
+version: 0.1.0
+description: A Helm chart for deploying Kuma service mesh
+apiVersion: v2
+appVersion: "1.0.0"
+dependencies:
+  - name: kuma
+    version: "1.0.0"
+    repository: "https://charts.kumahq.io"

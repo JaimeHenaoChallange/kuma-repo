@@ -1,0 +1,31 @@
+# Default configuration values for the Kuma Helm chart
+
+replicaCount: 1
+
+image:
+  repository: kumahq/kuma
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 5681
+  annotations: {}
+
+ingress:
+  enabled: false
+  path: /
+  hosts:
+    - host: kuma.local
+      paths:
+        - /
+  tls: [] 
+
+resources: {}
+  
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

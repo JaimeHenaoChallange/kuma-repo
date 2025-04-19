@@ -1,0 +1,39 @@
+apiVersion: kuma.io/v1alpha1
+kind: Mesh
+metadata:
+  name: default
+spec:
+  mtls:
+    enabled: true
+
+---
+apiVersion: kuma.io/v1alpha1
+kind: Gateway
+metadata:
+  name: kuma-gateway
+  namespace: kuma-system
+spec:
+  tags:
+    service: kuma-gateway
+  network:
+    address: 0.0.0.0
+    port: 5681
+
+---
+apiVersion: kuma.io/v1alpha1
+kind: Dataplane
+metadata:
+  name: kuma-dataplane
+  namespace: kuma-system
+spec:
+  network:
+    inbound:
+      - port: 8080
+        servicePort: 8080
+        tags:
+          service: demo-app
+    outbound:
+      - service: kuma-gateway
+  mesh: default
+  tags:
+    service: kuma-dataplane

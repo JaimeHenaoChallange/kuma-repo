@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuma-control-plane
+  labels:
+    app: kuma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kuma
+  template:
+    metadata:
+      labels:
+        app: kuma
+    spec:
+      containers:
+        - name: kuma-control-plane
+          image: kumahq/kuma:latest
+          ports:
+            - containerPort: 5681
+            - containerPort: 5682
+          env:
+            - name: KUMA_CONTROL_PLANE_GUI
+              value: "true"
+            - name: KUMA_DNS_SERVER
+              value: "kuma-dns.kuma-system.svc.cluster.local"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
