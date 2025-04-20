@@ -1,4 +1,4 @@
-# Create Workspaces Project
+# Kuma-repo
 
 This project is designed to set up a service mesh using Kuma with Kubernetes, leveraging tools such as Minikube, Kind, Helm, and ArgoCD. 
 
