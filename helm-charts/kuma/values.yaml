@@ -9,6 +9,11 @@ image:
   tag: "2.1.0"
   pullPolicy: IfNotPresent
 
+# Command and arguments for the control plane container
+controlPlane:
+  command: ["kuma-cp"]
+  args: ["run"]
+
 # Configuration for the Kuma data plane image
 kumaDp:
   image:
