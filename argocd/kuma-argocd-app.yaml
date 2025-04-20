@@ -5,11 +5,11 @@ metadata:
   name: kuma
   namespace: argocd
 spec:
-  project: default
+  project: poc-1
   source:
-    repoURL: https://kumahq.github.io/charts
-    targetRevision: 2.7.1 # Cambia esto a la versión de Kuma que deseas instalar
-    chart: kuma
+    repoURL: https://github.com/JaimeHenaoChallange/kuma-repo.git
+    targetRevision: main # Cambia esto a la rama que deseas usar
+    path: helm-charts/kuma
   destination:
     server: https://kubernetes.default.svc
     namespace: kuma-system
