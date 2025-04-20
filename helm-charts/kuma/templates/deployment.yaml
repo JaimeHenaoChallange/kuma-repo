@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kuma-control-plane
+  namespace: kuma-system
   labels:
     app: kuma
 spec:
@@ -13,6 +14,7 @@ spec:
     metadata:
       labels:
         app: kuma
+        component: control-plane
     spec:
       containers:
         - name: kuma-cp
@@ -22,20 +24,4 @@ spec:
           args: ["run"]
           ports:
             - containerPort: 5681
-              name: admin
             - containerPort: 5682
-              name: grpc
-          env:
-            - name: KUMA_CONTROL_PLANE_GUI
-              value: "true"
-            - name: KUMA_DNS_SERVER
-              value: "kuma-dns.kuma-system.svc.cluster.local"
-            - name: KUMA_MODE
-              value: "standalone"
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
-              memory: "256Mi"
