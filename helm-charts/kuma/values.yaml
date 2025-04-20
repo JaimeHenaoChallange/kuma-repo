@@ -1,72 +1,105 @@
 # Default configuration values for the Kuma Helm chart
 
+# Replica count for the Kuma control plane
 replicaCount: 1
 
+# Configuration for the Kuma control plane image
 image:
   repository: kong-docker-kuma-docker.bintray.io/kuma-cp
   tag: "2.1.0"
   pullPolicy: IfNotPresent
 
+# Configuration for the Kuma data plane image
 kumaDp:
   image:
     repository: kong-docker-kuma-docker.bintray.io/kuma-dp
     tag: "2.1.0"
     pullPolicy: IfNotPresent
 
+# Configuration for the Kuma init container image
 kumaInit:
   image:
     repository: kong-docker-kuma-docker.bintray.io/kuma-init
     tag: "2.1.0"
     pullPolicy: IfNotPresent
 
+# Service configuration for the Kuma control plane
 service:
   enabled: true
-  type: ClusterIP
+  type: ClusterIP # Change to NodePort or LoadBalancer if external access is needed
   port: 5681
-  annotations: {}
+  annotations: {} # Add annotations if needed for service discovery or monitoring
 
+# Ingress configuration for exposing Kuma externally
 ingress:
-  enabled: false
+  enabled: false # Set to true to enable Ingress
   path: /
   hosts:
-    - host: kuma.local
+    - host: kuma.local # Replace with your domain or hostname
       paths:
         - /
-  tls: [] 
+  tls: [] # Add TLS configuration if needed for secure communication
 
-resources: {}
-  
+# Resource requests and limits for the Kuma control plane
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+# Node selector for scheduling pods on specific nodes
 nodeSelector: {}
 
+# Tolerations for scheduling pods on tainted nodes
 tolerations: []
 
+# Affinity rules for pod scheduling
 affinity: {}
 
+# Mesh configuration
 mesh:
   name: default
   mtls:
-    enabled: true
+    enabled: true # Enable mutual TLS for secure communication between services
 
+# Gateway configuration
 gateway:
   name: kuma-gateway
   namespace: kuma-system
   network:
-    address: 0.0.0.0
-    port: 5681
+    address: 0.0.0.0 # Listen on all interfaces
+    port: 5681 # Gateway port
   tags:
-    service: kuma-gateway
+    service: kuma-gateway # Service tag for the gateway
 
+# Data plane configuration
 dataplane:
   name: kuma-dataplane
   namespace: kuma-system
   mesh: default
   network:
     inbound:
-      - port: 8080
-        servicePort: 8080
+      - port: 8080 # Port exposed by the data plane
+        servicePort: 8080 # Port used by the service
         tags:
-          service: demo-app
+          service: demo-app # Tag for the service
     outbound:
-      - service: kuma-gateway
+      - service: kuma-gateway # Outbound traffic directed to the gateway
   tags:
-    service: kuma-dataplane
+    service: kuma-dataplane # Service tag for the data plane
+
+# Gateway resource definition
+apiVersion: kuma.io/v1alpha1
+kind: Gateway
+metadata:
+  name: kuma-gateway
+  namespace: kuma-system
+spec:
+  tags:
+    service: kuma-gateway
+  conf:
+    listeners:
+      - port: 5681
+        protocol: http
