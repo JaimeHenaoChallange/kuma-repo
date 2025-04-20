@@ -13,9 +13,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: kuma-service
+                name: kuma-control-plane
                 port:
-                  number: 80
+                  number: 5681
   tls:
     - hosts:
         - kuma.local
