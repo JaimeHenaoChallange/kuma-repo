@@ -6,16 +6,18 @@ metadata:
   labels:
     app: kuma
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 5681
       targetPort: 5681
       protocol: TCP
       name: admin
+      nodePort: 30081
     - port: 5682
       targetPort: 5682
       protocol: TCP
       name: grpc
+      nodePort: 30082
   selector:
     app: kuma
     component: control-plane
