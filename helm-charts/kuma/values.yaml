@@ -5,21 +5,21 @@ replicaCount: 1
 
 # Configuration for the Kuma control plane image
 image:
-  repository: kong-docker-kuma-docker.bintray.io/kuma-cp
+  repository: docker.io/kumahq/kuma-cp
   tag: "2.1.0"
   pullPolicy: IfNotPresent
 
 # Configuration for the Kuma data plane image
 kumaDp:
   image:
-    repository: kong-docker-kuma-docker.bintray.io/kuma-dp
+    repository: docker.io/kumahq/kuma-dp
     tag: "2.1.0"
     pullPolicy: IfNotPresent
 
 # Configuration for the Kuma init container image
 kumaInit:
   image:
-    repository: kong-docker-kuma-docker.bintray.io/kuma-init
+    repository: docker.io/kumahq/kuma-init
     tag: "2.1.0"
     pullPolicy: IfNotPresent
 
