@@ -15,8 +15,9 @@ spec:
         app: kuma
     spec:
       containers:
-        - name: kuma-control-plane
-          image: kumahq/kuma:latest
+        - name: kuma-cp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           ports:
             - containerPort: 5681
             - containerPort: 5682

@@ -1,0 +1,43 @@
+apiVersion: kuma.io/v1alpha1
+kind: Mesh
+metadata:
+  name: {{ .Values.mesh.name }}
+spec:
+  mtls:
+    enabled: {{ .Values.mesh.mtls.enabled }}
+
+---
+apiVersion: kuma.io/v1alpha1
+kind: Gateway
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.gateway.namespace }}
+spec:
+  tags:
+    service: {{ .Values.gateway.tags.service }}
+  network:
+    address: {{ .Values.gateway.network.address }}
+    port: {{ .Values.gateway.network.port }}
+
+---
+apiVersion: kuma.io/v1alpha1
+kind: Dataplane
+metadata:
+  name: {{ .Values.dataplane.name }}
+  namespace: {{ .Values.dataplane.namespace }}
+spec:
+  network:
+    inbound:
+{{- range .Values.dataplane.network.inbound }}
+      - port: {{ .port }}
+        servicePort: {{ .servicePort }}
+        tags:
+{{ toYaml .tags | indent 10 }}
+{{- end }}
+    outbound:
+{{- range .Values.dataplane.network.outbound }}
+      - service: {{ .service }}
+{{- end }}
+  mesh: {{ .Values.dataplane.mesh }}
+  tags:
+{{ toYaml .Values.dataplane.tags | indent 4 }}

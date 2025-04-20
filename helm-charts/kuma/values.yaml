@@ -3,9 +3,21 @@
 replicaCount: 1
 
 image:
-  repository: kumahq/kuma
-  tag: latest
+  repository: kong-docker-kuma-docker.bintray.io/kuma-cp
+  tag: "2.1.0"
   pullPolicy: IfNotPresent
+
+kumaDp:
+  image:
+    repository: kong-docker-kuma-docker.bintray.io/kuma-dp
+    tag: "2.1.0"
+    pullPolicy: IfNotPresent
+
+kumaInit:
+  image:
+    repository: kong-docker-kuma-docker.bintray.io/kuma-init
+    tag: "2.1.0"
+    pullPolicy: IfNotPresent
 
 service:
   enabled: true
@@ -29,3 +41,32 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+mesh:
+  name: default
+  mtls:
+    enabled: true
+
+gateway:
+  name: kuma-gateway
+  namespace: kuma-system
+  network:
+    address: 0.0.0.0
+    port: 5681
+  tags:
+    service: kuma-gateway
+
+dataplane:
+  name: kuma-dataplane
+  namespace: kuma-system
+  mesh: default
+  network:
+    inbound:
+      - port: 8080
+        servicePort: 8080
+        tags:
+          service: demo-app
+    outbound:
+      - service: kuma-gateway
+  tags:
+    service: kuma-dataplane
