@@ -1,8 +1,8 @@
-# Kuma-repo
+# Create Workspaces Project
 
-This project is designed to set up a service mesh using Kuma with Kubernetes, leveraging tools such as Minikube, Kind, Helm, and ArgoCD. 
+---
 
-## Project Structure
+## **Estructura del Repositorio**
 
 - **makefiles/**: Contains Makefiles for managing different components of the project.
   - **minikube.mk**: Rules for managing a Minikube cluster, including creating, setting up Ingress, and deleting the cluster.
