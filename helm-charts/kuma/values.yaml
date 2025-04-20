@@ -26,19 +26,19 @@ kumaInit:
 # Service configuration for the Kuma control plane
 service:
   enabled: true
-  type: ClusterIP # Change to NodePort or LoadBalancer if external access is needed
+  type: ClusterIP
   port: 5681
-  annotations: {} # Add annotations if needed for service discovery or monitoring
+  annotations: {}
 
 # Ingress configuration for exposing Kuma externally
 ingress:
-  enabled: false # Set to true to enable Ingress
+  enabled: false
   path: /
   hosts:
-    - host: kuma.local # Replace with your domain or hostname
+    - host: kuma.local
       paths:
         - /
-  tls: [] # Add TLS configuration if needed for secure communication
+  tls: []
 
 # Resource requests and limits for the Kuma control plane
 resources:
@@ -49,30 +49,21 @@ resources:
     memory: "512Mi"
     cpu: "500m"
 
-# Node selector for scheduling pods on specific nodes
-nodeSelector: {}
-
-# Tolerations for scheduling pods on tainted nodes
-tolerations: []
-
-# Affinity rules for pod scheduling
-affinity: {}
-
 # Mesh configuration
 mesh:
   name: default
   mtls:
-    enabled: true # Enable mutual TLS for secure communication between services
+    enabled: true
 
 # Gateway configuration
 gateway:
   name: kuma-gateway
   namespace: kuma-system
   network:
-    address: 0.0.0.0 # Listen on all interfaces
-    port: 5681 # Gateway port
+    address: 0.0.0.0
+    port: 5681
   tags:
-    service: kuma-gateway # Service tag for the gateway
+    service: kuma-gateway
 
 # Data plane configuration
 dataplane:
@@ -81,11 +72,11 @@ dataplane:
   mesh: default
   network:
     inbound:
-      - port: 8080 # Port exposed by the data plane
-        servicePort: 8080 # Port used by the service
+      - port: 8080
+        servicePort: 8080
         tags:
-          service: demo-app # Tag for the service
+          service: demo-app
     outbound:
-      - service: kuma-gateway # Outbound traffic directed to the gateway
+      - service: kuma-gateway
   tags:
-    service: kuma-dataplane # Service tag for the data plane
+    service: kuma-dataplane

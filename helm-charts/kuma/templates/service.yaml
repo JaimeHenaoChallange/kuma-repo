@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kuma-control-plane
+  namespace: kuma-system
   labels:
     app: kuma
 spec:

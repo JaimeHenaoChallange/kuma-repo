@@ -8,16 +8,17 @@ spec:
 
 ---
 apiVersion: kuma.io/v1alpha1
-kind: Gateway
+kind: MeshGateway
 metadata:
   name: {{ .Values.gateway.name }}
   namespace: {{ .Values.gateway.namespace }}
 spec:
   tags:
     service: {{ .Values.gateway.tags.service }}
-  network:
-    address: {{ .Values.gateway.network.address }}
-    port: {{ .Values.gateway.network.port }}
+  conf:
+    listeners:
+      - port: {{ .Values.gateway.network.port }}
+        protocol: http
 
 ---
 apiVersion: kuma.io/v1alpha1
