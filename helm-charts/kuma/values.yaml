@@ -89,17 +89,3 @@ dataplane:
       - service: kuma-gateway # Outbound traffic directed to the gateway
   tags:
     service: kuma-dataplane # Service tag for the data plane
-
-# Gateway resource definition
-apiVersion: kuma.io/v1alpha1
-kind: Gateway
-metadata:
-  name: kuma-gateway
-  namespace: kuma-system
-spec:
-  tags:
-    service: kuma-gateway
-  conf:
-    listeners:
-      - port: 5681
-        protocol: http
