@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kuma-control-plane
-  namespace: kuma-system
+namespace: kuma-system
   labels:
     app: kuma
 spec:
@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: kuma
-        component: control-plane
+component: control-plane
     spec:
       containers:
         - name: kuma-cp
@@ -23,5 +23,5 @@ spec:
           command: ["kuma-cp"]
           args: ["run"]
           ports:
-            - containerPort: 5681
-            - containerPort: 5682
+           - containerPort: 5681
+                      - containerPort: 5682
