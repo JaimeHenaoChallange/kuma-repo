@@ -37,7 +37,7 @@ service:
 
 # Ingress configuration for exposing Kuma externally
 ingress:
-  enabled: false
+  enabled: true
   path: /
   hosts:
     - host: kuma.local
