@@ -6,7 +6,7 @@ replicaCount: 1
 # Configuration for the Kuma control plane image
 image:
   repository: docker.io/kumahq/kuma-cp
-  tag: "2.1.0"
+  tag: "2.7.1"
   pullPolicy: IfNotPresent
 
 # Command and arguments for the control plane container
@@ -18,14 +18,14 @@ controlPlane:
 kumaDp:
   image:
     repository: docker.io/kumahq/kuma-dp
-    tag: "2.1.0"
+    tag: "2.7.1"
     pullPolicy: IfNotPresent
 
 # Configuration for the Kuma init container image
 kumaInit:
   image:
     repository: docker.io/kumahq/kuma-init
-    tag: "2.1.0"
+    tag: "2.7.1"
     pullPolicy: IfNotPresent
 
 # Service configuration for the Kuma control plane
