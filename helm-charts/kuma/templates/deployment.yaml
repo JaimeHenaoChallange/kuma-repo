@@ -16,6 +16,7 @@ spec:
         app: kuma
         component: control-plane
     spec:
+      serviceAccountName: kuma-control-plane # Asociar el ServiceAccount
       containers:
         - name: kuma-cp
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
